@@ -22,7 +22,7 @@ with open("README.md", "r", encoding="utf8") as fh:
 
 setup(
     name="spdy-py",
-    version="0.1.0",
+    version="0.2.0",
     author="Mathew Odden",
     author_email="mrodden@us.ibm.com",
     url="https://github.com/mrodden/spdy-py",

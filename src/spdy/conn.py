@@ -40,6 +40,24 @@ class IncompleteRead(Exception):
     pass
 
 
+class AttrDict(object):
+    def __init__(self, data):
+        self._inner = data
+
+    def __getitem__(self, name):
+        return self._inner[name]
+
+    def __getattr__(self, name):
+        try:
+            return self.__getitem__(name)
+        except KeyError:
+            raise AttributeError("%r object has no attribute %r" % (self, name))
+
+
+class Frame(AttrDict):
+    pass
+
+
 class Framer:
     def __init__(self):
         self.buffer = bytearray()
@@ -53,7 +71,7 @@ class Framer:
         try:
             frame = self._read_frame()
             while frame:
-                frames.append(frame)
+                frames.append(Frame(frame))
                 frame = self._read_frame()
 
         except IncompleteRead:
